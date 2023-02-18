@@ -4,6 +4,11 @@ from waitress import serve
 from movierecmodel import recommend
 from flask_cors import CORS
 import boto3
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # create an S3 resource
 s3 = boto3.resource('s3')
@@ -12,8 +17,8 @@ s3 = boto3.resource('s3')
 bucket_name = 'cosinesimilarityformovies'
 file_name = 'cosine_sim.pickle'
 
-access_key = "AKIAUUQTHWBQZO7K4DXL"
-secret_key = "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"
+access_key = os.getenv("AWS_ACCESS_KEY_ID")
+secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 
 # download the file
