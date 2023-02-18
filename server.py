@@ -1,33 +1,15 @@
 import pickle
+import requests
 from flask import Flask, request, jsonify
 from waitress import serve
 from movierecmodel import recommend
 from flask_cors import CORS
-import boto3
-import os
-from dotenv import load_dotenv
 
 
-load_dotenv()
-
-# create an S3 resource
-s3 = boto3.resource('s3')
-
-# specify the S3 bucket and file to download
-bucket_name = 'cosinesimilarityformovies'
-file_name = 'cosine_sim.pickle'
-
-access_key = os.getenv("AWS_ACCESS_KEY_ID")
-secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
-
-
-# download the file
-s3 = boto3.resource('s3', aws_access_key_id=access_key,
-                    aws_secret_access_key=secret_key)
-
-# Load the cosine similarity matrix using pickle
-with open('cosine_sim.pickle', 'rb') as f:
-    cosine_sim = pickle.load(f)
+# Download the cosine similarity matrix using requests
+export_file_url = 'https://drive.google.com/uc?id=1qNYXLL7jlrMx8AFv2CD71G89l7CqNTnl'
+response = requests.get(export_file_url)
+cosine_sim = pickle.loads(response.content)
 
 app = Flask(__name__)
 CORS(app)
