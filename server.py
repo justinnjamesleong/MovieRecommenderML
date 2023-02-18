@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from waitress import serve
 from movierecmodel import recommend
 from flask_cors import CORS
+import requests
 
 
 # Download the cosine similarity matrix using requests
