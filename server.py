@@ -12,8 +12,13 @@ s3 = boto3.resource('s3')
 bucket_name = 'cosinesimilarityformovies'
 file_name = 'cosine_sim.pickle'
 
+access_key = "AKIAUUQTHWBQZO7K4DXL"
+secret_key = "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"
+
+
 # download the file
-s3.Bucket(bucket_name).download_file(file_name, file_name)
+s3 = boto3.resource('s3', aws_access_key_id=access_key,
+                    aws_secret_access_key=secret_key)
 
 # Load the cosine similarity matrix using pickle
 with open('cosine_sim.pickle', 'rb') as f:
@@ -38,4 +43,4 @@ def make_recommendation():
 
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=8080)
+    serve(app, host='0.0.0.0', port=5000)
